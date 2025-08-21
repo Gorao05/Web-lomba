@@ -1,57 +1,72 @@
-// js/lomba.js - improved, accessible, performance-minded
+// js/trisabilillah.js - improved, accessible, performance-minded
 
-document.addEventListener('DOMContentLoaded', () => {
-    const preloader = document.querySelector('.preloader');
+// Wrap all DOM manipulation in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Navbar & Mobile Menu Toggle ---
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
-    const backToTopButton = document.querySelector('.back-to-top');
-    const typingElement = document.querySelector('.typing-effect');
-    const animatedLoadEls = document.querySelectorAll('.animate-on-load');
+    const ppdbButton = document.querySelector('.ppdb-button'); // Mengambil langsung tombol PPDB
 
-    /* ========== PRELOADER ========== */
-    // Hide preloader after load or fallback 2.2s
-    const hidePreloader = () => {
-        if (!preloader) return;
-        preloader.classList.add('hidden');
-        // reveal loaded elements with their respective delays
-        animatedLoadEls.forEach((el) => {
-            // Delay is already set via data-delay in HTML and CSS var(--delay)
-            el.classList.add('animated'); // Trigger CSS animation
-        });
-    };
-    window.addEventListener('load', hidePreloader);
-    // safety fallback in case 'load' event doesn't fire or takes too long
-    setTimeout(hidePreloader, 2200);
-
-    /* ========== MOBILE MENU ========== */
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('nav-active');
-            const icon = menuToggle.querySelector('i');
-            const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', String(!expanded));
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-            // Prevent body scroll when menu is open
-            document.body.classList.toggle('no-scroll');
-        });
-
-        // close mobile menu when a link is clicked
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('nav-active')) {
-                    navLinks.classList.remove('nav-active');
-                    const icon = menuToggle.querySelector('i');
-                    icon.classList.add('fa-bars');
-                    icon.classList.remove('fa-times');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                    document.body.classList.remove('no-scroll');
-                }
-            });
-        });
+    // Add null checks for critical elements
+    if (!menuToggle || !navLinks || !ppdbButton) {
+        console.error('ERROR: One or more critical navbar elements not found. Check HTML structure.');
+        // Prevent further script execution if elements are missing
+        return; 
     }
 
-    /* ========== SCROLL REVEAL (IntersectionObserver) ========== */
+    menuToggle.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !isExpanded);
+        navLinks.classList.toggle('nav-active');
+        
+        // Toggle PPDB button visibility on mobile
+        if (window.innerWidth <= 768) {
+            // Jika menu aktif, tampilkan tombol PPDB
+            if (navLinks.classList.contains('nav-active')) {
+                ppdbButton.style.display = 'flex'; // Menggunakan flex agar bisa di-center
+            } else {
+                ppdbButton.style.display = 'none';
+            }
+        }
+    });
+
+    // Close menu when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+        // Check if click is outside nav and menu is active on mobile
+        if (window.innerWidth <= 768 && 
+            !e.target.closest('nav') && 
+            navLinks.classList.contains('nav-active')) {
+            navLinks.classList.remove('nav-active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            ppdbButton.style.display = 'none'; // Sembunyikan tombol PPDB saat menu tertutup
+        }
+    });
+
+    // Handle window resize to reset menu state for desktop
+    function handleResize() {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('nav-active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            ppdbButton.style.display = 'block'; // Selalu tampilkan di desktop
+        } else {
+            // On mobile, hide PPDB button if menu is not active
+            if (!navLinks.classList.contains('nav-active')) {
+                ppdbButton.style.display = 'none';
+            }
+        }
+    }
+
+    // Debounce resize handler for performance
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(handleResize, 200); // Adjust debounce time as needed
+    });
+
+    // Initial call to handleResize to set correct state on load
+    handleResize();
+
+    // --- Scroll Reveal (IntersectionObserver) ---
     const scrollElements = document.querySelectorAll('.animate-on-scroll');
     const io = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
@@ -64,8 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, {threshold: 0.15}); // Threshold sedikit lebih tinggi
     scrollElements.forEach(el => io.observe(el));
 
-    /* ========== TYPING EFFECT (reliable & smooth) ========== */
-    if (typingElement) {
+    // --- Typing Effect (reliable & smooth) ---
+    const typingElement = document.querySelector('.typing-effect');
+    if (typingElement) { // Ensure element exists before trying to animate
         const words = ["Unggul", "Cerdas", "Kreatif", "Berkarakter"];
         let w = 0; // word index
         let letter = 0; // character index
@@ -101,22 +117,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         tick(); // Start the typing effect
+    } else {
+        console.warn('Typing effect element (.typing-effect) not found.');
     }
 
-    /* ========== BACK TO TOP ========== */
-    if (backToTopButton) {
+    // --- Back to Top Button ---
+    const backToTopButton = document.querySelector('.back-to-top');
+    if (backToTopButton) { // Ensure element exists
         window.addEventListener('scroll', () => {
             if (window.pageYOffset > 400) backToTopButton.classList.add('visible'); // Muncul lebih cepat
             else backToTopButton.classList.remove('visible');
         });
         backToTopButton.addEventListener('click', e => {
             e.preventDefault();
-            window.scrollTo({top:0,behavior:'smooth'});
+            window.scrollTo({top: 0, behavior: 'smooth'});
         });
+    } else {
+        console.warn('Back to top button (.back-to-top) not found.');
     }
 
-    /* ========== SCROLLSPY: highlight nav items on scroll ==========
-       - Adds .active class to menu links matching section in viewport */
+    // --- Scrollspy: highlight nav items on scroll ---
     const sections = document.querySelectorAll('main section[id]');
     const navAnchors = document.querySelectorAll('.nav-links a');
 
@@ -136,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sections.forEach(s => spyObserver.observe(s));
 
-    /* ========== PARTICLES (lazy-init & reduced on mobile) ========== */
+    // --- Particles.js Initialization ---
     function initParticles() {
         try {
             // reduce particle count on small screens
@@ -145,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const size = isSmall ? 2.5 : 3.5; // Ukuran partikel
             const distance = isSmall ? 100 : 160; // Jarak line linked
 
-            if (window.particlesJS) {
+            if (typeof particlesJS !== 'undefined') { // Check if particlesJS is loaded
                 particlesJS('particles-js', {
                     particles: {
                         number: { value: count, density: { enable: true, value_area: isSmall ? 700 : 900 } },
@@ -163,26 +183,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     retina_detect: true
                 });
+            } else {
+                console.warn('particlesJS function not found. Ensure particles.min.js is loaded.');
             }
         } catch (err) {
-            console.warn('Particles init gagal:', err);
+            console.error('Error initializing particles:', err);
         }
     }
 
     // Initialize particles after small delay (and only if lib loaded)
-    const attemptParticles = () => {
-        if (typeof window.particlesJS === 'function') initParticles();
-        else {
-            setTimeout(() => {
-                if (typeof window.particlesJS === 'function') initParticles();
-            }, 800);
-        }
-    };
-    attemptParticles();
+    // Use a timeout to give particles.min.js time to load if it's deferred
+    setTimeout(initParticles, 500); 
 
-    /* ========== SWIPER JS (for Aktivitas section) ========== */
-    // Pastikan Swiper dimuat sebelum inisialisasi
-    if (typeof Swiper !== 'undefined') {
+    // --- Swiper JS (for Aktivitas section) ---
+    if (typeof Swiper !== 'undefined') { // Check if Swiper is loaded
         new Swiper('.news-slider', {
             slidesPerView: 1,
             spaceBetween: 30,
@@ -211,21 +225,25 @@ document.addEventListener('DOMContentLoaded', () => {
             },
         });
     } else {
-        console.warn('Swiper.js library not loaded.');
+        console.warn('Swiper.js library not loaded. Carousel will not function.');
     }
 
-    /* ========== OPTIONAL: keyboard accessibility improvements ==========
-       - close mobile nav on Escape key
-    */
+    // --- Optional: keyboard accessibility improvements ---
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && navLinks.classList.contains('nav-active')) {
             navLinks.classList.remove('nav-active');
-            const icon = menuToggle.querySelector('i');
-            icon.classList.add('fa-bars');
-            icon.classList.remove('fa-times');
-            menuToggle.setAttribute('aria-expanded','false');
-            document.body.classList.remove('no-scroll');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            ppdbButton.style.display = 'none'; // Hide PPDB button when menu closes
         }
     });
 
-}); // DOMContentLoaded
+    // --- Preloader ---
+    const preloader = document.querySelector('.preloader');
+    if (preloader) {
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+            }, 500); // Tambahkan jeda untuk transisi yang lebih halus
+        });
+    }
+}); // DOMContentLoaded end

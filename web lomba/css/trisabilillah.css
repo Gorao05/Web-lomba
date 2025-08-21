@@ -44,7 +44,7 @@ body {
     position: fixed; inset: 0; /* shorthand for top, right, bottom, left */
     background: var(--primary-color);
     display: grid; place-items: center;
-    z-index: 2000;
+    z-index: 2000; /* Pastikan di atas segalanya */
     transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -59,98 +59,168 @@ body {
 
 /* ===== NAVBAR STYLING ===== */
 header {
-    background: rgba(255, 255, 255, 0.98); /* Lebih solid untuk visibilitas */
-    backdrop-filter: blur(8px); /* Efek blur yang modern */
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08); /* Shadow yang lebih halus */
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 0;
-    z-index: 1000;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Garis bawah tipis */
+    z-index: 1000; /* Pastikan di atas konten lain */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
-    max-width: 1280px; /* Kontrol lebar maksimum navbar */
-    margin: 0 auto; /* Pusatkan navbar */
-    padding: 0 40px; /* Padding horizontal untuk konten navbar */
+    padding: 15px 20px;
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* Logo styling */
+/* Logo Section - Kiri */
+/* Logo sekarang langsung di dalam nav, tidak perlu .logo-container */
 .logo {
     display: flex;
     align-items: center;
-    gap: 12px; /* Jarak antara gambar dan teks logo */
-    transition: transform 0.3s ease;
+    text-decoration: none;
+    flex-shrink: 0; /* Mencegah logo menyusut */
+    /* Hapus flex: 1; dan justify-content: flex-start; dari sini */
 }
 
-.logo:hover {
-    transform: scale(1.03);
+.logo-img {
+    height: 50px;
+    margin-right: 15px;
 }
 
-.logo-img { /* Class baru untuk gambar logo */
-    height: 48px;
-    width: auto;
-}
-
-.logo-text { /* Class baru untuk teks logo */
+.logo-text {
     font-family: 'Playfair Display', serif;
-    font-weight: 700;
     font-size: 1.5rem;
+    font-weight: 700;
     color: var(--primary-color);
-    letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
-/* Navigation links */
+/* Menu Tengah */
 .nav-links {
     display: flex;
-    gap: 40px; /* Jarak antar link navigasi */
+    gap: 20px;
     list-style: none;
+    margin: 0;
+    padding: 0;
+    /* Posisikan absolut untuk centering di desktop */
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; 
 }
 
 .nav-links a {
-    position: relative;
     text-decoration: none;
-    color: var(--dark-color);
+    color: var(--light-color);
     font-weight: 600;
-    font-size: 1.05rem;
-    padding: 12px 0; /* Padding vertikal untuk area klik */
-    transition: all 0.3s ease;
-    letter-spacing: 0.3px;
+    transition: color 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
-    width: 0;
-    height: 2.5px; /* Ketebalan garis bawah */
-    bottom: 8px; /* Posisi garis bawah */
+    bottom: -5px;
     left: 0;
-    background-color: var(--accent-color);
+    width: 0;
+    height: 2px;
+    background: var(--secondary-color);
     transition: width 0.3s ease;
-    border-radius: 2px;
-}
-
-.nav-links a:hover {
-    color: var(--primary-color);
 }
 
 .nav-links a:hover::after {
     width: 100%;
 }
 
-.nav-links a.active {
-    color: var(--secondary-color);
+/* PPDB Button - Kanan */
+/* Menggunakan class cta-button yang sudah ada, tidak perlu .ppdb-button-container */
+.ppdb-button { /* Ini adalah .cta-button yang digunakan untuk PPDB */
+    background: var(--secondary-color); /* Menggunakan secondary-color untuk PPDB */
+    color: white;
+    padding: 10px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(46, 196, 182, 0.25);
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0; /* Mencegah tombol menyusut */
 }
 
-.nav-links a.active::after {
-    width: 100%;
-    background-color: var(--secondary-color);
+.ppdb-button:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 44, 84, 0.35);
 }
 
-/* CTA Button */
+/* Mobile View */
+@media (max-width: 768px) {
+    nav {
+        padding: 0 25px;
+        /* Tetap space-between untuk logo dan toggle */
+    }
+    
+    /* Logo tidak perlu flex: none; lagi karena sudah diatur di desktop */
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: var(--primary-color);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.nav-active {
+        display: flex;
+    }
+    
+    /* PPDB button di mobile, tampilkan di dalam menu */
+    .ppdb-button {
+        /* Atur ulang gaya untuk tampil di dalam menu mobile */
+        margin-top: 20px; /* Jarak dari link terakhir */
+        padding: 14px 32px;
+        font-size: 1.1rem;
+        display: none; /* Sembunyikan secara default di mobile, akan ditampilkan JS saat menu aktif */
+    }
+    
+    /* Tampilkan tombol PPDB saat menu mobile aktif */
+    .nav-links.nav-active ~ .ppdb-button { /* Menggunakan general sibling combinator */
+        display: flex; /* Tampilkan sebagai flex untuk centering */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu-toggle {
+        display: block; /* Tampilkan hamburger icon di mobile */
+        font-size: 2rem;
+        cursor: pointer;
+        color: var(--primary-color);
+        background: none;
+        border: none;
+        padding: 0;
+    }
+}
+
+
+/* CTA Button (general style, ppdb-button menggunakan ini juga) */
 .cta-button {
     background: var(--gradient-accent);
     color: white;
@@ -187,7 +257,16 @@ nav {
     height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center;
     color: var(--light-color); padding: 0 20px; position: relative; overflow: hidden;
 }
-#particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.2; } /* Opacity partikel */
+#particles-js { 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0; 
+    z-index: 1; 
+    opacity: 0.2; 
+    pointer-events: auto; /* Biarkan klik melewati partikel */
+} 
 .hero-content { max-width: 900px; z-index: 2; padding: 80px 0; } /* Padding lebih besar */
 .hero-content h1 {
     font-family: 'Playfair Display', serif;
@@ -259,12 +338,17 @@ nav {
 /* Bagian Program */
 .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
 .card {
-    background: var(--light-color); padding: 45px; border-radius: 20px;
-    box-shadow: var(--box-shadow); text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background: var(--bg-light);
+    box-shadow: var(--box-shadow);
     transition: var(--transition-smooth);
-    position: relative; overflow: hidden; border: 1px solid #eee;
 }
-.card:hover { transform: translateY(-15px); box-shadow: var(--card-shadow-hover); }
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--card-shadow-hover);
+}
 .card-icon-wrapper {
     width: 85px; height: 85px; border-radius: 28px;
     display: grid; place-items: center; margin: 0 auto 28px;
@@ -480,6 +564,7 @@ a:focus, button:focus {
 @media (max-width: 1024px) {
     nav {
         padding: 0 30px;
+        /* Hapus column-gap karena nav-links sudah absolute */
     }
     
     .nav-links {
@@ -500,50 +585,50 @@ a:focus, button:focus {
 @media (max-width: 768px) {
     nav {
         padding: 0 25px;
+        /* Tetap space-between untuk logo dan toggle */
     }
     
-    .logo-img {
-        height: 42px;
-    }
-    
-    .logo-text {
-        font-size: 1.3rem;
-    }
-    
-    .menu-toggle {
-        display: block; /* Show hamburger icon on mobile */
-    }
-    
+    /* Logo tidak perlu flex: none; lagi karena sudah diatur di desktop */
+
     .nav-links {
-        position: fixed;
-        top: 80px;
-        right: 0;
-        width: 100%;
-        height: calc(100vh - 80px);
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(12px);
+        display: none;
         flex-direction: column;
-        align-items: center;
-        justify-content: flex-start; /* Menggeser item ke atas */
-        padding-top: 60px; /* Memberi ruang dari atas */
-        gap: 35px; /* Jarak antar item di mobile */
-        transform: translateX(100%);
-        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        background-color: var(--primary-color);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    
+
     .nav-links.nav-active {
-        transform: translateX(0);
+        display: flex;
     }
     
-    .nav-links a {
-        font-size: 1.25rem;
-        padding: 8px 0;
-    }
-    
-    .cta-button {
+    /* PPDB button di mobile, tampilkan di dalam menu */
+    .ppdb-button {
+        /* Atur ulang gaya untuk tampil di dalam menu mobile */
         margin-top: 20px; /* Jarak dari link terakhir */
         padding: 14px 32px;
         font-size: 1.1rem;
+        display: none; /* Sembunyikan secara default di mobile, akan ditampilkan JS saat menu aktif */
+    }
+    
+    /* Tampilkan tombol PPDB saat menu mobile aktif */
+    .nav-links.nav-active ~ .ppdb-button { /* Menggunakan general sibling combinator */
+        display: flex; /* Tampilkan sebagai flex untuk centering */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu-toggle {
+        display: block; /* Tampilkan hamburger icon di mobile */
+        font-size: 2rem;
+        cursor: pointer;
+        color: var(--primary-color);
+        background: none;
+        border: none;
+        padding: 0;
     }
 
     .section { padding: 80px 0; }
