@@ -1,72 +1,70 @@
-// js/trisabilillah.js - improved, accessible, performance-minded
-
-// Wrap all DOM manipulation in DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
-    // --- Navbar & Mobile Menu Toggle ---
+    
+    // --- Elemen-elemen Penting ---
     const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    const ppdbButton = document.querySelector('.ppdb-button'); // Mengambil langsung tombol PPDB
+    const mobileNav = document.querySelector('#nav-mobile');
+    const mainContent = document.querySelector('main');
+    const ppdbPage = document.querySelector('#ppdb-page');
+    const showPpdbButtons = document.querySelectorAll('.js-show-ppdb');
+    const backToMainButtons = document.querySelectorAll('.js-back-to-main');
+    const footer = document.querySelector('footer');
 
-    // Add null checks for critical elements
-    if (!menuToggle || !navLinks || !ppdbButton) {
-        console.error('ERROR: One or more critical navbar elements not found. Check HTML structure.');
-        // Prevent further script execution if elements are missing
-        return; 
-    }
-
-    menuToggle.addEventListener('click', function() {
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', !isExpanded);
-        navLinks.classList.toggle('nav-active');
-        
-        // Toggle PPDB button visibility on mobile
-        if (window.innerWidth <= 768) {
-            // Jika menu aktif, tampilkan tombol PPDB
-            if (navLinks.classList.contains('nav-active')) {
-                ppdbButton.style.display = 'flex'; // Menggunakan flex agar bisa di-center
-            } else {
-                ppdbButton.style.display = 'none';
-            }
-        }
-    });
-
-    // Close menu when clicking outside on mobile
-    document.addEventListener('click', function(e) {
-        // Check if click is outside nav and menu is active on mobile
-        if (window.innerWidth <= 768 && 
-            !e.target.closest('nav') && 
-            navLinks.classList.contains('nav-active')) {
-            navLinks.classList.remove('nav-active');
+    // --- Logika Buka/Tutup Halaman PPDB ---
+    function showPpdbPage() {
+        mainContent.style.display = 'none';
+        footer.style.display = 'none';
+        ppdbPage.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Tutup menu mobile jika terbuka
+        if (mobileNav.classList.contains('nav-active')) {
+            mobileNav.classList.remove('nav-active');
+            menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
             menuToggle.setAttribute('aria-expanded', 'false');
-            ppdbButton.style.display = 'none'; // Sembunyikan tombol PPDB saat menu tertutup
-        }
-    });
-
-    // Handle window resize to reset menu state for desktop
-    function handleResize() {
-        if (window.innerWidth > 768) {
-            navLinks.classList.remove('nav-active');
-            menuToggle.setAttribute('aria-expanded', 'false');
-            ppdbButton.style.display = 'block'; // Selalu tampilkan di desktop
-        } else {
-            // On mobile, hide PPDB button if menu is not active
-            if (!navLinks.classList.contains('nav-active')) {
-                ppdbButton.style.display = 'none';
-            }
         }
     }
 
-    // Debounce resize handler for performance
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(handleResize, 200); // Adjust debounce time as needed
+    function showMainPage() {
+        mainContent.style.display = 'block';
+        footer.style.display = 'block';
+        ppdbPage.style.display = 'none';
+    }
+
+    showPpdbButtons.forEach(button => {
+        button.addEventListener('click', showPpdbPage);
     });
 
-    // Initial call to handleResize to set correct state on load
-    handleResize();
+    backToMainButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            showMainPage();
+        });
+    });
 
-    // --- Scroll Reveal (IntersectionObserver) ---
+    // --- Navbar & Mobile Menu Toggle ---
+    if (menuToggle && mobileNav) {
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            mobileNav.classList.toggle('nav-active');
+            
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        mobileNav.querySelectorAll('a').forEach(anchor => {
+            anchor.addEventListener('click', function() {
+                 if (!this.classList.contains('js-show-ppdb')) {
+                    showMainPage(); 
+                    mobileNav.classList.remove('nav-active');
+                    menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    }
+    
+    // --- Animasi Scroll ---
     const scrollElements = document.querySelectorAll('.animate-on-scroll');
     const io = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
@@ -76,174 +74,225 @@ document.addEventListener('DOMContentLoaded', function() {
                 obs.unobserve(entry.target);
             }
         });
-    }, {threshold: 0.15}); // Threshold sedikit lebih tinggi
+    }, {threshold: 0.1});
     scrollElements.forEach(el => io.observe(el));
 
-    // --- Typing Effect (reliable & smooth) ---
+    // --- Typing Effect ---
     const typingElement = document.querySelector('.typing-effect');
-    if (typingElement) { // Ensure element exists before trying to animate
+    if (typingElement) {
         const words = ["Unggul", "Cerdas", "Kreatif", "Berkarakter"];
-        let w = 0; // word index
-        let letter = 0; // character index
-        let deleting = false;
-        const TYPING_SPEED = 100; // Kecepatan mengetik
-        const DELETING_SPEED = 60; // Kecepatan menghapus
-        const PAUSE_AFTER_TYPE = 1500; // Jeda setelah mengetik penuh
-        const PAUSE_AFTER_DELETE = 500; // Jeda setelah menghapus penuh
+        let w = 0, letter = 0, deleting = false;
+        const typeSpeed = 100, deleteSpeed = 60, pauseAfterType = 1500, pauseAfterDelete = 500;
 
         function tick() {
             const current = words[w];
             if (!deleting) {
-                // Typing
-                typingElement.textContent = current.slice(0, letter + 1);
-                letter++;
-                if (letter === current.length) {
-                    deleting = true;
-                    setTimeout(tick, PAUSE_AFTER_TYPE);
-                    return;
-                }
-                setTimeout(tick, TYPING_SPEED);
+                typingElement.textContent = current.slice(0, ++letter);
+                if (letter === current.length) { deleting = true; setTimeout(tick, pauseAfterType); return; }
+                setTimeout(tick, typeSpeed);
             } else {
-                // Deleting
-                typingElement.textContent = current.slice(0, letter - 1);
-                letter--;
-                if (letter === 0) {
-                    deleting = false;
-                    w = (w + 1) % words.length; // Pindah ke kata berikutnya
-                    setTimeout(tick, PAUSE_AFTER_DELETE);
-                    return;
-                }
-                setTimeout(tick, DELETING_SPEED);
+                typingElement.textContent = current.slice(0, --letter);
+                if (letter === 0) { deleting = false; w = (w + 1) % words.length; setTimeout(tick, pauseAfterDelete); return; }
+                setTimeout(tick, deleteSpeed);
             }
         }
-        tick(); // Start the typing effect
-    } else {
-        console.warn('Typing effect element (.typing-effect) not found.');
+        tick();
     }
 
-    // --- Back to Top Button ---
+    // --- Tombol Kembali ke Atas ---
     const backToTopButton = document.querySelector('.back-to-top');
-    if (backToTopButton) { // Ensure element exists
+    if (backToTopButton) {
         window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 400) backToTopButton.classList.add('visible'); // Muncul lebih cepat
-            else backToTopButton.classList.remove('visible');
+            backToTopButton.classList.toggle('visible', window.pageYOffset > 400);
         });
         backToTopButton.addEventListener('click', e => {
             e.preventDefault();
             window.scrollTo({top: 0, behavior: 'smooth'});
         });
-    } else {
-        console.warn('Back to top button (.back-to-top) not found.');
     }
 
-    // --- Scrollspy: highlight nav items on scroll ---
+    // --- Scrollspy ---
     const sections = document.querySelectorAll('main section[id]');
-    const navAnchors = document.querySelectorAll('.nav-links a');
-
-    const spyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const id = entry.target.id;
-            const link = document.querySelector(`.nav-links a[href="#${id}"]`);
-            if (entry.isIntersecting) {
-                navAnchors.forEach(a => a.classList.remove('active'));
-                if (link) link.classList.add('active');
+    const desktopNavLinks = document.querySelectorAll('.nav-desktop .nav-links a:not(.ppdb-button)');
+    
+    window.addEventListener('scroll', () => {
+        let current = 'hero'; // Default to hero
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 85) { 
+                current = section.getAttribute('id');
             }
         });
-    }, {
-        threshold: 0.45, // Sesuaikan threshold
-        rootMargin: '-50px 0px -50px 0px' // Margin untuk akurasi
-    });
 
-    sections.forEach(s => spyObserver.observe(s));
-
-    // --- Particles.js Initialization ---
-    function initParticles() {
-        try {
-            // reduce particle count on small screens
-            const isSmall = window.matchMedia('(max-width:768px)').matches;
-            const count = isSmall ? 25 : 70; // Jumlah partikel lebih banyak
-            const size = isSmall ? 2.5 : 3.5; // Ukuran partikel
-            const distance = isSmall ? 100 : 160; // Jarak line linked
-
-            if (typeof particlesJS !== 'undefined') { // Check if particlesJS is loaded
-                particlesJS('particles-js', {
-                    particles: {
-                        number: { value: count, density: { enable: true, value_area: isSmall ? 700 : 900 } },
-                        color: { value: "#ffffff" },
-                        shape: { type: "circle" },
-                        opacity: { value: 0.6, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
-                        size: { value: size, random: true, anim: { enable: false } },
-                        line_linked: { enable: true, distance: distance, color: "#ffffff", opacity: 0.35, width: 1.2 },
-                        move: { enable: true, speed: isSmall ? 1.5 : 2.5, out_mode: "out", bounce: false }
-                    },
-                    interactivity: {
-                        detect_on: "canvas",
-                        events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: true, mode: "push" }, resize: true },
-                        modes: { grab: { distance: 150, line_linked: { opacity: 1 } }, push: { particles_nb: 4 } }
-                    },
-                    retina_detect: true
-                });
-            } else {
-                console.warn('particlesJS function not found. Ensure particles.min.js is loaded.');
+        desktopNavLinks.forEach(a => {
+            a.classList.remove('active');
+            if (a.getAttribute('href') === `#${current}`) {
+                a.classList.add('active');
             }
-        } catch (err) {
-            console.error('Error initializing particles:', err);
-        }
-    }
-
-    // Initialize particles after small delay (and only if lib loaded)
-    // Use a timeout to give particles.min.js time to load if it's deferred
-    setTimeout(initParticles, 500); 
-
-    // --- Swiper JS (for Aktivitas section) ---
-    if (typeof Swiper !== 'undefined') { // Check if Swiper is loaded
-        new Swiper('.news-slider', {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: true, // Loop carousel
-            autoplay: { // Autoplay
-                delay: 4000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
-                },
-                1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 30,
-                },
-            },
         });
-    } else {
-        console.warn('Swiper.js library not loaded. Carousel will not function.');
+    });
+
+
+    // --- Particles.js ---
+    if (typeof particlesJS !== 'undefined') {
+        const isSmall = window.matchMedia('(max-width:768px)').matches;
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: isSmall ? 30 : 90, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.8, random: true, anim: { enable: true, speed: 1, opacity_min: 0.2, sync: false } },
+                size: { value: isSmall ? 3 : 4, random: true },
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.5, width: 1.5 },
+                move: { enable: true, speed: isSmall ? 1.5 : 2.5, direction: "none", out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: false }, resize: true },
+                modes: { grab: { distance: 150, line_linked: { opacity: 1 } } }
+            },
+            retina_detect: true
+        });
     }
 
-    // --- Optional: keyboard accessibility improvements ---
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navLinks.classList.contains('nav-active')) {
-            navLinks.classList.remove('nav-active');
-            menuToggle.setAttribute('aria-expanded', 'false');
-            ppdbButton.style.display = 'none'; // Hide PPDB button when menu closes
-        }
-    });
+    // --- Inisialisasi Swiper Sliders ---
+    if (typeof Swiper !== 'undefined') {
+        new Swiper('.news-slider', { slidesPerView: 1, spaceBetween: 30, loop: true, autoplay: { delay: 4500, disableOnInteraction: false }, pagination: { el: '.news-slider .swiper-pagination', clickable: true }, navigation: { nextEl: '.news-slider .swiper-button-next', prevEl: '.news-slider .swiper-button-prev' }, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }, });
+        new Swiper('.program-slider', { slidesPerView: 1, spaceBetween: 30, loop: true, autoplay: { delay: 5000, disableOnInteraction: false }, pagination: { el: '.program-slider .swiper-pagination', clickable: true }, navigation: { nextEl: '.program-slider .swiper-button-next', prevEl: '.program-slider .swiper-button-prev' }, breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }, });
+        new Swiper('.testimonial-slider', { slidesPerView: 1, spaceBetween: 30, loop: true, autoplay: { delay: 4000, disableOnInteraction: false }, pagination: { el: '.testimonial-slider .swiper-pagination', clickable: true }, breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }, });
+    }
 
     // --- Preloader ---
     const preloader = document.querySelector('.preloader');
-    if (preloader) {
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                preloader.classList.add('hidden');
-            }, 500); // Tambahkan jeda untuk transisi yang lebih halus
-        });
+    window.addEventListener('load', () => {
+        if(preloader) preloader.classList.add('hidden');
+    });
+
+    // --- AI Live Chat Logic ---
+    const chatWidget = document.getElementById('chat-widget');
+    const chatToggleButton = document.getElementById('chat-toggle-button');
+    const chatCloseButton = document.getElementById('chat-close-button');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+
+    const schoolInfo = `
+        Anda adalah asisten virtual yang ramah dan sangat membantu untuk Sekolah Sabilillah. Tugas Anda adalah menjawab pertanyaan dari calon siswa atau orang tua. Gunakan informasi berikut untuk menjawab pertanyaan. Selalu jawab dalam Bahasa Indonesia yang sopan dan bersahabat. Jika Anda tidak tahu jawabannya, sarankan pengguna untuk menghubungi nomor telepon sekolah di (0341) 488-808.
+
+        Informasi Kunci Sekolah:
+        - Nama Sekolah: Sekolah Sabilillah
+        - Lokasi: Jl. Ikan Kakap No.1 B, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142
+        - Telepon: (0341) 488-808
+        - WhatsApp PPDB: 0812-3456-7890
+        - Jam Operasional Kantor: Senin - Jumat, 08.00 - 16.00 WIB
+        - Jadwal Pendaftaran (PPDB) 2025/2026:
+            - Gelombang 1: 1 November 2024 - 31 Januari 2025
+            - Gelombang 2: 1 Februari 2025 - 31 Maret 2025 (jika kuota masih tersedia)
+        - Keunggulan Utama: Kurikulum Terpadu, Guru Profesional, Lingkungan Belajar Positif, Pembinaan Karakter & Akhlak.
+        - Program Unggulan: Kelas Robotik & Coding, Kelas Bilingual, Sains & Penelitian Muda, Tahfidz Al-Qur'an.
+    `;
+
+    let chatHistory = [{
+        role: "user",
+        parts: [{ text: schoolInfo }]
+    }, {
+        role: "model",
+        parts: [{ text: "Baik, saya mengerti. Saya adalah asisten virtual Sekolah Sabilillah. Saya siap membantu menjawab pertanyaan." }]
+    }];
+
+    const toggleChat = () => {
+        chatWidget.classList.toggle('visible');
+        if (chatWidget.classList.contains('visible') && chatMessages.children.length === 0) {
+            addMessage('ai', 'Halo! Ada yang bisa saya bantu seputar Sekolah Sabilillah?');
+        }
+    };
+
+    chatToggleButton.addEventListener('click', toggleChat);
+    chatCloseButton.addEventListener('click', toggleChat);
+
+    function addMessage(sender, text) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('chat-message', sender);
+        messageElement.textContent = text;
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-}); // DOMContentLoaded end
+    
+    function showTypingIndicator() {
+        let typingIndicator = chatMessages.querySelector('.typing');
+        if (!typingIndicator) {
+            typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('chat-message', 'ai', 'typing');
+            typingIndicator.textContent = 'Asisten sedang mengetik...';
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    }
+
+    function removeTypingIndicator() {
+        const typingIndicator = chatMessages.querySelector('.typing');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    async function getAiResponseWithRetry(prompt, retries = 3, delay = 1000) {
+        showTypingIndicator();
+        
+        const currentHistory = [...chatHistory, { role: "user", parts: [{ text: prompt }] }];
+
+        try {
+            const payload = { contents: currentHistory };
+            const apiKey = "AIzaSyC0nU5kudyQJpdxpSlLGIbwRgZ24jqyvGY"; // API key is handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                 if (response.status >= 500 && retries > 0) {
+                    await new Promise(res => setTimeout(res, delay));
+                    return getAiResponseWithRetry(prompt, retries - 1, delay * 2);
+                }
+                throw new Error(`API request failed with status ${response.status}`);
+            }
+
+            const result = await response.json();
+            
+            removeTypingIndicator();
+
+            if (result.candidates && result.candidates[0] && result.candidates[0].content && result.candidates[0].content.parts) {
+                const aiText = result.candidates[0].content.parts[0].text;
+                addMessage('ai', aiText);
+                // Update the main chat history
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+            } else {
+                addMessage('ai', 'Maaf, saya tidak dapat memproses permintaan itu. Bisakah Anda bertanya dengan cara lain?');
+                console.warn('AI response was valid but missing content.', result);
+            }
+        } catch (error) {
+            console.error("Error fetching AI response:", error);
+            if (retries > 0) {
+                await new Promise(res => setTimeout(res, delay));
+                return getAiResponseWithRetry(prompt, retries - 1, delay * 2);
+            } else {
+                removeTypingIndicator();
+                addMessage('ai', 'Maaf, terjadi kesalahan koneksi. Mohon hubungi kami melalui telepon di (0341) 488-808 untuk informasi lebih lanjut.');
+            }
+        }
+    }
+
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const userInput = chatInput.value.trim();
+        if (userInput) {
+            addMessage('user', userInput);
+            getAiResponseWithRetry(userInput);
+            chatInput.value = '';
+        }
+    });
+});
