@@ -2,132 +2,259 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sekolah Trisabilillah - Inovatif, Berprestasi, Berkarakter</title>
-    <meta name="description" content="Website portofolio resmi Sekolah Trisabilillah. Menampilkan prestasi, program unggulan, fasilitas modern, dan galeri kegiatan siswa untuk calon peserta didik baru.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sekolah Sabilillah - Inovatif, Berprestasi, Berkarakter Unggul</title>
+    <meta name="description" content="Website portofolio resmi Sekolah Sabilillah. Temukan keunggulan kurikulum terpadu, fasilitas modern, prestasi gemilang, dan program inovatif untuk mencetak generasi cerdas, kreatif, dan berakhlak mulia. Daftar PPDB sekarang!">
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
-    <link rel="stylesheet" href="css/trisabilillah.css">
+    <!-- Swiper CSS untuk Carousel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="preloader">
-        <div class="spinner"></div>
+    <div class="preloader" role="status" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
     </div>
 
     <header>
-        <nav class="container">
-            <a href="#hero" class="logo">
-                <img src="assets/images/field-trip.jpg" alt="Logo Sekolah Trisabilillah">
+        <nav class="container" role="navigation" aria-label="Navigasi utama situs">
+            <a href="#" class="logo js-back-to-main" aria-label="Beranda Sekolah Sabilillah">
+                <img src="https://placehold.co/150x50/0D2C54/ffffff?text=Sabilillah" 
+                     alt="Logo Sekolah Sabilillah" 
+                     width="150" 
+                     height="50" 
+                     class="logo-img">
             </a>
-            <ul class="nav-links">
-                <li><a href="#hero">Beranda</a></li>
-                <li><a href="#unggulan">Keunggulan</a></li>
-                <li><a href="#program">Program</a></li>
-                <li><a href="#aktivitas">Aktivitas</a></li>
-                <li><a href="#kontak">Kontak</a></li>
-            </ul>
-            <a href="#kontak" class="cta-button">Info PPDB</a>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
+
+            <div class="nav-desktop">
+                <ul class="nav-links">
+                    <li><a href="#hero">Beranda</a></li>
+                    <li><a href="#unggulan">Keunggulan</a></li>
+                    <li><a href="#program">Program</a></li>
+                    <li><a href="#aktivitas">Aktivitas</a></li>
+                    <li><a href="#fasilitas">Fasilitas</a></li>
+                    <li><a href="#testimoni">Testimoni</a></li>
+                    <li><a href="#kontak">Kontak</a></li>
+                </ul>
+                <a href="javascript:void(0);" class="ppdb-button js-show-ppdb">Info PPDB</a>
             </div>
+
+            <button class="menu-toggle" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="nav-mobile">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
         </nav>
     </header>
 
+    <!-- Menu untuk Mobile -->
+    <div id="nav-mobile" class="nav-mobile">
+        <a href="#hero" class="nav-link-mobile">Beranda</a>
+        <a href="#unggulan" class="nav-link-mobile">Keunggulan</a>
+        <a href="#program" class="nav-link-mobile">Program</a>
+        <a href="#aktivitas" class="nav-link-mobile">Aktivitas</a>
+        <a href="#fasilitas" class="nav-link-mobile">Fasilitas</a>
+        <a href="#testimoni" class="nav-link-mobile">Testimoni</a>
+        <a href="#kontak" class="nav-link-mobile">Kontak</a>
+        <a href="javascript:void(0);" class="ppdb-button js-show-ppdb">Info PPDB</a>
+    </div>
+
     <main>
-        <section id="hero">
-            <div id="particles-js"></div>
-            <div class="hero-content">
-                <h1 class="animate-on-load">Selamat Datang di Sekolah Trisabilillah</h1>
-                <p class="hero-tagline animate-on-load" data-delay="200">Mencetak Generasi <span class="typing-effect"></span></p>
-                <a href="#unggulan" class="hero-button animate-on-load" data-delay="400">Jelajahi Sekarang <i class="fas fa-arrow-down"></i></a>
+        <section id="hero" class="hero-section" aria-labelledby="hero-title">
+            <div id="particles-js" aria-hidden="true"></div>
+            <div class="hero-content container">
+                <h1 id="hero-title" class="animate-on-load">Selamat Datang di Sekolah Sabilillah</h1>
+                <p class="hero-tagline animate-on-load" data-delay="200">Mencetak Generasi <span class="typing-effect" aria-live="polite"></span></p>
+                <a href="#unggulan" class="hero-button animate-on-load" data-delay="400">Jelajahi Sekarang <i class="fas fa-arrow-down" aria-hidden="true"></i></a>
             </div>
         </section>
 
-        <section id="unggulan" class="container section">
+        <!-- Keunggulan -->
+        <section id="unggulan" class="container section" aria-labelledby="unggulan-title">
             <div class="section-header">
-                <h2 class="section-title animate-on-scroll">Kenapa Memilih Trisabilillah?</h2>
-                <p class="section-subtitle animate-on-scroll" data-delay="100">Fondasi terbaik untuk masa depan cerah putra-putri Anda.</p>
+                <h2 id="unggulan-title" class="section-title animate-on-scroll">Kenapa Memilih Sabilillah?</h2>
+                <p class="section-subtitle animate-on-scroll" data-delay="100">Fondasi terbaik untuk masa depan cerah putra-putri Anda. Kami berkomitmen penuh pada pendidikan holistik.</p>
             </div>
             <div class="feature-grid">
                 <div class="feature-item animate-on-scroll">
-                    <div class="feature-icon"><i class="fas fa-school-flag"></i></div>
-                    <h3>Kurikulum Terpadu</h3>
-                    <p>Menggabungkan kurikulum nasional dengan nilai-nilai luhur untuk membentuk karakter yang kuat.</p>
+                    <div class="feature-icon" aria-hidden="true"><i class="fas fa-school-flag"></i></div>
+                    <h3>Kurikulum Terpadu & Inovatif</h3>
+                    <p>Menggabungkan kurikulum nasional dengan nilai-nilai luhur, diperkaya metode pembelajaran aktif dan proyek.</p>
+                </div>
+                <div class="feature-item animate-on-scroll" data-delay="100">
+                    <div class="feature-icon" aria-hidden="true"><i class="fas fa-user-tie"></i></div>
+                    <h3>Guru Profesional & Berdedikasi</h3>
+                    <p>Tenaga pendidik berpengalaman, bersertifikasi, dan selalu mengikuti pelatihan terbaru untuk kualitas pengajaran terbaik.</p>
                 </div>
                 <div class="feature-item animate-on-scroll" data-delay="200">
-                    <div class="feature-icon"><i class="fas fa-user-tie"></i></div>
-                    <h3>Guru Profesional</h3>
-                    <p>Tenaga pendidik berpengalaman dan bersertifikasi yang berdedikasi tinggi dalam mengajar.</p>
+                    <div class="feature-icon" aria-hidden="true"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Lingkungan Belajar Positif</h3>
+                    <p>Menciptakan suasana belajar yang aman, nyaman, mendukung kreativitas, dan menghargai setiap potensi siswa.</p>
+                </div>
+                <div class="feature-item animate-on-scroll" data-delay="300">
+                    <div class="feature-icon" aria-hidden="true"><i class="fas fa-hands-holding-child"></i></div>
+                    <h3>Pembinaan Karakter & Akhlak</h3>
+                    <p>Fokus pada pengembangan moral, etika, kepemimpinan, dan tanggung jawab sosial melalui berbagai kegiatan.</p>
                 </div>
                 <div class="feature-item animate-on-scroll" data-delay="400">
-                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
-                    <h3>Lingkungan Belajar Positif</h3>
-                    <p>Menciptakan suasana belajar yang aman, nyaman, dan mendukung potensi setiap siswa.</p>
+                    <div class="feature-icon" aria-hidden="true"><i class="fas fa-cogs"></i></div>
+                    <h3>Teknologi Pendidikan Modern</h3>
+                    <p>Pemanfaatan teknologi terkini dalam proses belajar mengajar untuk pengalaman yang lebih interaktif dan efektif.</p>
                 </div>
-                <div class="feature-item animate-on-scroll" data-delay="600">
-                    <div class="feature-icon"><i class="fas fa-heart"></i></div>
-                    <h3>Pembinaan Karakter & Akhlak</h3>
-                    <p>Menanamkan nilai-nilai moral dan etika untuk membentuk generasi yang berakhlak mulia.</p>
-                </div>
-                <div class="feature-item animate-on-scroll" data-delay="800">
-                    <div class="feature-icon"><i class="fas fa-book"></i></div>
-                    <h3>Fasilitas Lengkap</h3>
-                    <p>Fasilitas modern untuk mendukung pembelajaran yang efektif dan menyenangkan.</p>
-                </div>
-                <div class="feature-item animate-on-scroll" data-delay="1000">
-                    <div class="feature-icon"><i class="fas fa-globe"></i></div>
-                    <h3>Kompetensi Global</h3>
-                    <p>Persiapan siswa untuk bersaing di tingkat internasional dengan program bilingual.</p>
+                <div class="feature-item animate-on-scroll" data-delay="500">
+                    <div class="feature-icon" aria-hidden="true"><i class="fas fa-users"></i></div>
+                    <h3>Kemitraan dengan Orang Tua</h3>
+                    <p>Membangun komunikasi dan kerjasama yang kuat antara sekolah dan orang tua untuk mendukung perkembangan siswa.</p>
                 </div>
             </div>
         </section>
 
-        <section id="program" class="container section">
-            <div class="section-header">
-                <h2 class="section-title animate-on-scroll">Program Unggulan</h2>
-                <p class="section-subtitle animate-on-scroll" data-delay="100">Mengasah potensi siswa sesuai minat dan bakat.</p>
+        <!-- Prestasi -->
+        <section id="prestasi" class="container section" aria-labelledby="prestasi-title">
+             <div class="section-header">
+                <h2 id="prestasi-title" class="section-title animate-on-scroll">Prestasi Gemilang Kami</h2>
+                <p class="section-subtitle animate-on-scroll" data-delay="100">Kebanggaan kami adalah hasil kerja keras dan dedikasi siswa serta seluruh civitas akademika.</p>
             </div>
-            <div class="card-grid">
-                <div class="card animate-on-scroll">
-                    <div class="card-icon-wrapper blue"><i class="fas fa-palette card-icon"></i></div>
-                    <h3>Seni & Desain</h3>
-                    <p>Mengasah kreativitas siswa melalui program seni lukis, musik, dan desain grafis yang komprehensif.</p>
+            <div class="prestasi-grid">
+                <div class="prestasi-card animate-on-scroll">
+                    <div class="prestasi-icon" aria-hidden="true"><i class="fas fa-trophy"></i></div>
+                    <div class="prestasi-content">
+                        <h3>Juara 1 Olimpiade Sains Nasional (OSN) 2024</h3>
+                        <p>Meraih medali emas dalam OSN tingkat Nasional bidang Matematika, membuktikan keunggulan akademik siswa kami.</p>
+                    </div>
                 </div>
-                <div class="card animate-on-scroll" data-delay="200">
-                    <div class="card-icon-wrapper blue"><i class="fas fa-robot card-icon"></i></div>
-                    <h3>Kelas Robotik & Coding</h3>
-                    <p>Mempersiapkan siswa menghadapi era digital dengan keterampilan teknologi dan problem-solving.</p>
+                <div class="prestasi-card animate-on-scroll" data-delay="200">
+                    <div class="prestasi-icon" aria-hidden="true"><i class="fas fa-award"></i></div>
+                    <div class="prestasi-content">
+                        <h3>Akreditasi A "Unggul" dari BAN-S/M (2023)</h3>
+                        <p>Diakui oleh Badan Akreditasi Nasional Sekolah/Madrasah dengan predikat tertinggi untuk kualitas pendidikan.</p>
+                    </div>
                 </div>
-                <div class="card animate-on-scroll" data-delay="400">
-                    <div class="card-icon-wrapper blue"><i class="fas fa-language card-icon"></i></div>
-                    <h3>Kelas Bilingual</h3>
-                    <p>Pembelajaran dua bahasa (Indonesia & Inggris) aktif untuk meningkatkan daya saing global siswa.</p>
+                <div class="prestasi-card animate-on-scroll" data-delay="400">
+                    <div class="prestasi-icon" aria-hidden="true"><i class="fas fa-users"></i></div>
+                    <div class="prestasi-content">
+                        <h3>Juara Umum Lomba Tingkat IV Pramuka Provinsi (2023)</h3>
+                        <p>Menjadi juara umum dalam kompetisi Pramuka tingkat provinsi, menunjukkan karakter dan kepemimpinan siswa.</p>
+                    </div>
                 </div>
-                <div class="card animate-on-scroll" data-delay="600">
-                    <div class="card-icon-wrapper blue"><i class="fas fa-flask card-icon"></i></div>
-                    <h3>Sains & Penelitian Muda</h3>
-                    <p>Mendorong siswa untuk berinovasi dan melakukan penelitian ilmiah sejak dini.</p>
-                </div>
-                <div class="card animate-on-scroll" data-delay="800">
-                    <div class="card-icon-wrapper blue"><i class="fas fa-futbol card-icon"></i></div>
-                    <h3>Olahraga & Kesehatan</h3>
-                    <p>Program olahraga untuk menjaga kesehatan fisik dan mental siswa.</p>
-                </div>
-                <div class="card animate-on-scroll" data-delay="1000">
-                    <div class="card-icon-wrapper blue"><i class="fas fa-music card-icon"></i></div>
-                    <h3>Ekstrakurikuler Musik</h3>
-                    <p>Melatih siswa untuk mengembangkan bakat musik mereka melalui berbagai kegiatan.</p>
+                <div class="prestasi-card animate-on-scroll" data-delay="600">
+                    <div class="prestasi-icon" aria-hidden="true"><i class="fas fa-robot"></i></div>
+                    <div class="prestasi-content">
+                        <h3>Medali Emas Kompetisi Robotik Nasional (2024)</h3>
+                        <p>Tim robotik kami berhasil meraih medali emas dalam ajang kompetisi robotik tingkat nasional.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Aktivitas (Menggunakan Swiper.js untuk Carousel) -->
+        <!-- Program -->
+        <section id="program" class="container section" aria-labelledby="program-title">
+             <div class="section-header">
+                <h2 id="program-title" class="section-title animate-on-scroll">Program Unggulan Kami</h2>
+                <p class="section-subtitle animate-on-scroll" data-delay="100">Mengasah potensi siswa sesuai minat dan bakat, mempersiapkan mereka untuk masa depan yang dinamis.</p>
+            </div>
+            <div class="swiper program-slider animate-on-scroll">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-palette card-icon"></i></div>
+                            <h3>Seni & Desain Kreatif</h3>
+                            <p>Mengasah kreativitas siswa melalui seni lukis, musik, tari, dan desain grafis digital.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-robot card-icon"></i></div>
+                            <h3>Kelas Robotik & Coding</h3>
+                            <p>Mempersiapkan siswa menghadapi era digital dengan keterampilan pemrograman dan problem-solving.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-language card-icon"></i></div>
+                            <h3>Kelas Bilingual</h3>
+                            <p>Pembelajaran dua bahasa (Indonesia & Inggris) aktif untuk meningkatkan daya saing global.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-flask card-icon"></i></div>
+                            <h3>Sains & Penelitian Muda</h3>
+                            <p>Mendorong minat siswa dalam sains melalui eksperimen, proyek penelitian, dan olimpiade.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-bullhorn card-icon"></i></div>
+                            <h3>Public Speaking</h3>
+                            <p>Melatih kepercayaan diri dan kemampuan berkomunikasi siswa di depan umum secara efektif.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-seedling card-icon"></i></div>
+                            <h3>Kewirausahaan</h3>
+                            <p>Menanamkan jiwa entrepreneurship sejak dini melalui program bisnis dan bazar sekolah.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-book-open-reader card-icon"></i></div>
+                            <h3>Tahfidz Al-Qur'an</h3>
+                            <p>Program menghafal Al-Qur'an dengan metode yang mudah dan menyenangkan bagi siswa.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-running card-icon"></i></div>
+                            <h3>Pengembangan Atletik</h3>
+                            <p>Membina bakat olahraga siswa melalui pelatihan profesional di berbagai cabang olahraga.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-microchip card-icon"></i></div>
+                            <h3>Digital Literacy</h3>
+                            <p>Mengajarkan siswa cara menggunakan teknologi digital secara bijak, aman, dan bertanggung jawab.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-globe-asia card-icon"></i></div>
+                            <h3>Studi Budaya</h3>
+                            <p>Memperkenalkan keragaman budaya lokal dan internasional untuk memperluas wawasan siswa.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-hands-helping card-icon"></i></div>
+                            <h3>Bakti Sosial</h3>
+                            <p>Menumbuhkan empati dan kepedulian sosial melalui kegiatan pengabdian kepada masyarakat.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-icon-wrapper"><i class="fas fa-tree card-icon"></i></div>
+                            <h3>Pendidikan Lingkungan</h3>
+                            <p>Meningkatkan kesadaran siswa akan pentingnya menjaga dan melestarikan lingkungan hidup.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
+        <!-- Aktivitas -->
         <section id="aktivitas" class="container section" aria-labelledby="aktivitas-title">
             <div class="section-header">
                 <h2 id="aktivitas-title" class="section-title animate-on-scroll">Momen & Aktivitas Terbaru</h2>
@@ -137,7 +264,7 @@
                 <div class="swiper-wrapper">
                     <article class="swiper-slide news-card">
                         <div class="news-image">
-                            <img src="assets/images/konser-musik.jpg" alt="Siswa tampil di konser musik sekolah" loading="lazy">
+                            <img src="https://placehold.co/600x400/3D405B/ffffff?text=Konser+Musik" alt="Siswa tampil di konser musik sekolah" loading="lazy">
                         </div>
                         <div class="news-content">
                             <span class="news-category">KONSER MUSIK</span>
@@ -148,7 +275,7 @@
                     </article>
                     <article class="swiper-slide news-card">
                         <div class="news-image">
-                            <img src="assets/images/pentas-seni.jpg" alt="Siswa menampilkan pentas seni tahunan" loading="lazy">
+                            <img src="https://placehold.co/600x400/81B29A/ffffff?text=Pentas+Seni" alt="Siswa menampilkan pentas seni tahunan" loading="lazy">
                         </div>
                         <div class="news-content">
                             <span class="news-category">PENTAS SENI</span>
@@ -159,7 +286,7 @@
                     </article>
                     <article class="swiper-slide news-card">
                         <div class="news-image">
-                            <img src="assets/images/field-trip.jpg" alt="Siswa sedang field trip edukasi" loading="lazy">
+                            <img src="https://placehold.co/600x400/E07A5F/ffffff?text=Field+Trip" alt="Siswa sedang field trip edukasi" loading="lazy">
                         </div>
                         <div class="news-content">
                             <span class="news-category">EDUKASI</span>
@@ -170,7 +297,7 @@
                     </article>
                     <article class="swiper-slide news-card">
                         <div class="news-image">
-                            <img src=" https://placehold.co/600x400/FFC107/ffffff?text=Bazar+Kewirausahaan" alt="Bazar Kewirausahaan Siswa" loading="lazy">
+                            <img src="https://placehold.co/600x400/FFC107/ffffff?text=Bazar+Kewirausahaan" alt="Bazar Kewirausahaan Siswa" loading="lazy">
                         </div>
                         <div class="news-content">
                             <span class="news-category">KEWIRAUSAHAAN</span>
@@ -180,9 +307,7 @@
                         </div>
                     </article>
                 </div>
-                <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>
-                <!-- Add Navigation -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
@@ -196,42 +321,42 @@
             </div>
             <div class="gallery-grid">
                 <div class="gallery-item animate-on-scroll">
-                    <img src="assets/images/gedung-sekolah.jpg" alt="Tampilan luar gedung Sekolah Trisabilillah" loading="lazy">
+                    <img src="https://placehold.co/600x450/e8e8e8/333?text=Gedung+Sekolah" alt="Tampilan luar gedung Sekolah Sabilillah" loading="lazy">
                     <div class="overlay">
                         <span><i class="fas fa-school"></i> Gedung Sekolah</span>
                         <p>Bangunan modern dan nyaman untuk lingkungan belajar yang kondusif.</p>
                     </div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-delay="150">
-                    <img src="assets/images/perpustakaan.jpg" alt="Interior perpustakaan digital sekolah" loading="lazy">
+                    <img src="https://placehold.co/600x450/e8e8e8/333?text=Perpustakaan" alt="Interior perpustakaan digital sekolah" loading="lazy">
                     <div class="overlay">
                         <span><i class="fas fa-book-open"></i> Perpustakaan Digital</span>
                         <p>Koleksi buku lengkap dan akses ke sumber daya digital untuk riset.</p>
                     </div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-delay="300">
-                    <img src="assets/images/lab-komputer.jpg" alt="Siswa belajar di laboratorium komputer canggih" loading="lazy">
+                    <img src="https://placehold.co/600x450/e8e8e8/333?text=Lab+Komputer" alt="Siswa belajar di laboratorium komputer canggih" loading="lazy">
                     <div class="overlay">
                         <span><i class="fas fa-laptop-code"></i> Lab Komputer Canggih</span>
                         <p>Dilengkapi perangkat keras dan lunak terbaru untuk pembelajaran TIK.</p>
                     </div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-delay="450">
-                    <img src="assets/images/lab-sains.jpg" alt="Siswa melakukan eksperimen di laboratorium sains" loading="lazy">
+                    <img src="https://placehold.co/600x450/e8e8e8/333?text=Lab+Sains" alt="Siswa melakukan eksperimen di laboratorium sains" loading="lazy">
                     <div class="overlay">
                         <span><i class="fas fa-flask"></i> Lab Sains Lengkap</span>
                         <p>Fasilitas eksperimen fisika, kimia, dan biologi yang modern dan aman.</p>
                     </div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-delay="600">
-                    <img src="assets/images/gor.jpg" alt="Gedung Olah Raga indoor sekolah" loading="lazy">
+                    <img src="https://placehold.co/600x450/e8e8e8/333?text=GOR" alt="Gedung Olah Raga indoor sekolah" loading="lazy">
                     <div class="overlay">
                         <span><i class="fas fa-building"></i> Gedung Olah Raga Indoor</span>
                         <p>Area multifungsi untuk berbagai kegiatan olahraga dan acara sekolah.</p>
                     </div>
                 </div>
                 <div class="gallery-item animate-on-scroll" data-delay="750">
-                    <img src="assets/images/lapangan-olahraga.jpg" alt="Lapangan olahraga outdoor sekolah" loading="lazy">
+                    <img src="https://placehold.co/600x450/e8e8e8/333?text=Lapangan" alt="Lapangan olahraga outdoor sekolah" loading="lazy">
                     <div class="overlay">
                         <span><i class="fas fa-futbol"></i> Lapangan Olahraga Outdoor</span>
                         <p>Lapangan luas untuk sepak bola, basket, dan aktivitas fisik lainnya.</p>
@@ -246,34 +371,67 @@
                 <h2 id="testimoni-title" class="section-title animate-on-scroll">Apa Kata Mereka Tentang Kami?</h2>
                 <p class="section-subtitle animate-on-scroll" data-delay="100">Dengarkan pengalaman positif dari wali murid dan alumni kami.</p>
             </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card animate-on-scroll">
-                    <img src=" https://placehold.co/100x100/3D405B/ffffff?text=A" alt="Foto Ahmad Subarjo, Wali Murid" loading="lazy">
-                    <p>"Sekolah Trisabilillah benar-benar luar biasa. Anak saya tidak hanya unggul di bidang akademik, tetapi juga tumbuh menjadi pribadi yang percaya diri dan berkarakter kuat. Lingkungan yang sangat mendukung!"</p>
-                    <h4>- Ahmad Subarjo -</h4>
-                    <span>Wali Murid Kelas 8</span>
+            <div class="swiper testimonial-slider animate-on-scroll">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <img src="https://placehold.co/100x100/3D405B/ffffff?text=A" alt="Foto Ahmad Subarjo, Wali Murid" loading="lazy">
+                            <p>"Anak saya tidak hanya unggul akademik, tetapi juga tumbuh menjadi pribadi berkarakter kuat. Lingkungan yang sangat mendukung!"</p>
+                            <h4>- Ahmad Subarjo -</h4>
+                            <span>Wali Murid Kelas 8</span>
+                        </div>
+                    </div>
+                     <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <img src="https://placehold.co/100x100/E07A5F/ffffff?text=S" alt="Foto Siti Nurhaliza, Alumni" loading="lazy">
+                            <p>"Guru-guru yang hebat di Sabilillah menjadi bekal berharga bagi saya untuk melanjutkan ke jenjang pendidikan yang lebih tinggi. Bangga menjadi alumni!"</p>
+                            <h4>- Siti Nurhaliza -</h4>
+                            <span>Alumni Angkatan 2022</span>
+                        </div>
+                    </div>
+                     <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <img src="https://placehold.co/100x100/81B29A/ffffff?text=B" alt="Foto Budi Santoso, Wali Murid" loading="lazy">
+                            <p>"Program ekstrakurikuler-nya sangat beragam dan membantu anak saya menemukan bakat terpendamnya. Perkembangan anak saya sangat signifikan."</p>
+                            <h4>- Budi Santoso -</h4>
+                            <span>Wali Murid Kelas 5</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <img src="https://placehold.co/100x100/F2CC8F/ffffff?text=D" alt="Foto Dewi Lestari, Wali Murid" loading="lazy">
+                            <p>"Fasilitas sekolah sangat lengkap dan modern. Anak saya sangat senang belajar di lab sains yang baru. Terima kasih Sabilillah!"</p>
+                            <h4>- Dewi Lestari -</h4>
+                            <span>Wali Murid Kelas 7</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <img src="https://placehold.co/100x100/5E503F/ffffff?text=R" alt="Foto Rian Pratama, Alumni" loading="lazy">
+                            <p>"Pendidikan karakter di sini benar-benar terasa. Saya belajar banyak tentang kepemimpinan dan kerja tim yang sangat berguna di dunia kerja."</p>
+                            <h4>- Rian Pratama -</h4>
+                            <span>Alumni Angkatan 2020</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <img src="https://placehold.co/100x100/B85042/ffffff?text=I" alt="Foto Indah Permata, Wali Murid" loading="lazy">
+                            <p>"Komunikasi antara guru dan orang tua sangat baik. Saya selalu mendapat update perkembangan anak saya secara berkala."</p>
+                            <h4>- Indah Permata -</h4>
+                            <span>Wali Murid Kelas 9</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="testimonial-card animate-on-scroll" data-delay="200">
-                    <img src=" https://placehold.co/100x100/E07A5F/ffffff?text=S" alt="Foto Siti Nurhaliza, Alumni" loading="lazy">
-                    <p>"Lingkungan belajar yang mendukung dan guru-guru yang hebat di Trisabilillah menjadi bekal berharga bagi saya untuk melanjutkan ke jenjang pendidikan yang lebih tinggi. Saya sangat bangga menjadi alumni!"</p>
-                    <h4>- Siti Nurhaliza -</h4>
-                    <span>Alumni Angkatan 2022, Mahasiswa Berprestasi</span>
-                </div>
-                <div class="testimonial-card animate-on-scroll" data-delay="400">
-                    <img src=" https://placehold.co/100x100/81B29A/ffffff?text=B" alt="Foto Budi Santoso, Wali Murid" loading="lazy">
-                    <p>"Saya melihat perkembangan signifikan pada anak saya sejak bergabung dengan Trisabilillah. Program ekstrakurikuler-nya sangat beragam dan membantu anak saya menemukan bakat terpendamnya."</p>
-                    <h4>- Budi Santoso -</h4>
-                    <span>Wali Murid Kelas 5</span>
-                </div>
+                <div class="swiper-pagination"></div>
             </div>
         </section>
 
         <!-- CTA -->
         <section id="cta" class="section" aria-labelledby="cta-title">
             <div class="container cta-content">
-                <h2 id="cta-title" class="animate-on-scroll">Siap Bergabung dengan Keluarga Besar Trisabilillah?</h2>
+                <h2 id="cta-title" class="animate-on-scroll">Siap Bergabung dengan Keluarga Besar Sabilillah?</h2>
                 <p class="animate-on-scroll" data-delay="100">Jadilah bagian dari generasi penerus yang cerdas, kreatif, dan berakhlak mulia. Daftar sekarang dan raih masa depan cerah bersama kami!</p>
-                <a href="#kontak" class="cta-main-button animate-on-scroll" data-delay="200">Hubungi Kami Sekarang</a>
+                <a href="javascript:void(0);" class="cta-main-button animate-on-scroll js-show-ppdb" data-delay="200">Hubungi Kami Sekarang</a>
             </div>
         </section>
         
@@ -289,25 +447,91 @@
                     <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Jl. Ikan Kakap No.1 B, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142</p>
                     <p><i class="fas fa-phone" aria-hidden="true"></i> (0341) 488-808</p>
                     <p><i class="fab fa-whatsapp" aria-hidden="true"></i> 0812-3456-7890 (Admin PPDB)</p>
-                    <p><i class="fas fa-envelope" aria-hidden="true"></i> info@trisabilillah.sch.id</p>
+                    <p><i class="fas fa-envelope" aria-hidden="true"></i> info@sabilillah.sch.id</p>
                     <p><i class="fas fa-clock" aria-hidden="true"></i> Senin - Jumat: 08.00 - 16.00 WIB</p>
                 </div>
                 <div class="contact-map animate-on-scroll" data-delay="200">
-                    <iframe src=" https://www.google.com/maps?q=Jl.+Ikan+Kakap+No.1+B,+Tunjungsekar,+Kec.+Lowokwaru,+Kota+Malang,+Jawa+Timur+65142&output=embed" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi Sekolah Trisabilillah di Google Maps"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.573333333333!2d112.63000000000001!3d-7.939999999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7882744ed36361%3A0x1b27a052e7a5038!2sJl.%20Ikan%20Kakap%20No.1B%2C%20Tunjungsekar%2C%20Kec.%20Lowokwaru%2C%20Kota%20Malang%2C%20Jawa%20Timur%2065142!5e0!3m2!1sen!2sid!4v1620000000000!5m2!1sen!2sid" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi Sekolah Sabilillah di Google Maps"></iframe>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
+    <!-- Halaman PPDB (Tersembunyi secara default) -->
+    <section id="ppdb-page" class="section">
+        <div class="ppdb-header">
+            <h2 class="animate-on-scroll">Pendaftaran Peserta Didik Baru (PPDB)</h2>
+        </div>
+        <div class="container ppdb-content">
+            <div class="ppdb-card animate-on-scroll">
+                <h3><i class="fas fa-school-flag"></i>Kenapa Memilih Sabilillah?</h3>
+                <p>Kami menawarkan pendidikan holistik yang seimbang antara keunggulan akademis, pengembangan karakter, dan penguasaan teknologi. Bersama kami, putra-putri Anda akan dibimbing untuk menjadi pemimpin masa depan yang berakhlak mulia dan berwawasan global.</p>
+            </div>
+
+            <div class="ppdb-card animate-on-scroll" data-delay="100">
+                <h3><i class="fas fa-calendar-alt"></i>Jadwal Penting PPDB 2025/2026</h3>
+                <ul>
+                    <li><strong>Gelombang 1:</strong> 1 November 2024 - 31 Januari 2025</li>
+                    <li><strong>Gelombang 2:</strong> 1 Februari 2025 - 31 Maret 2025 (jika kuota masih tersedia)</li>
+                    <li><strong>Tes Observasi & Wawancara:</strong> Akan diinformasikan setelah pendaftaran</li>
+                    <li><strong>Pengumuman Hasil:</strong> 15 April 2025</li>
+                    <li><strong>Daftar Ulang:</strong> 16 - 30 April 2025</li>
+                </ul>
+            </div>
+
+            <div class="ppdb-card animate-on-scroll" data-delay="200">
+                <h3><i class="fas fa-clipboard-list"></i>Alur Pendaftaran</h3>
+                <div class="timeline">
+                    <div class="timeline-item" data-step="1">
+                        <h4>Pengambilan Formulir</h4>
+                        <p>Datang langsung ke sekolah atau unduh formulir pendaftaran di website kami.</p>
+                    </div>
+                    <div class="timeline-item" data-step="2">
+                        <h4>Pengembalian Berkas</h4>
+                        <p>Lengkapi formulir dan serahkan beserta dokumen persyaratan ke panitia PPDB.</p>
+                    </div>
+                    <div class="timeline-item" data-step="3">
+                        <h4>Tes Seleksi</h4>
+                        <p>Calon siswa mengikuti tes observasi (kemampuan dasar) dan wawancara (calon siswa & orang tua).</p>
+                    </div>
+                    <div class="timeline-item" data-step="4">
+                        <h4>Pengumuman</h4>
+                        <p>Hasil seleksi diumumkan melalui website resmi dan papan pengumuman sekolah.</p>
+                    </div>
+                    <div class="timeline-item" data-step="5">
+                        <h4>Daftar Ulang</h4>
+                        <p>Siswa yang dinyatakan lulus wajib melakukan daftar ulang untuk konfirmasi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ppdb-card animate-on-scroll" data-delay="300">
+                <h3><i class="fas fa-file-alt"></i>Syarat Pendaftaran</h3>
+                <ul>
+                    <li>Mengisi formulir pendaftaran secara lengkap.</li>
+                    <li>Fotokopi Akta Kelahiran (2 lembar).</li>
+                    <li>Fotokopi Kartu Keluarga (2 lembar).</li>
+                    <li>Pas foto berwarna ukuran 3x4 (4 lembar).</li>
+                    <li>Fotokopi Ijazah dan SKHUN dari sekolah sebelumnya (bisa menyusul).</li>
+                    <li>Surat keterangan sehat dari dokter.</li>
+                </ul>
+            </div>
+
+            <a href="javascript:void(0);" class="back-button js-back-to-main animate-on-scroll" data-delay="400">
+                <i class="fas fa-arrow-left"></i> Kembali ke Halaman Utama
+            </a>
+        </div>
+    </section>
+
+    <footer style="display: block;">
         <div class="footer-container container">
             <div class="footer-about">
-                <img src=" https://placehold.co/150x50/3D405B/ffffff?text=Trisabilillah" alt="Logo Sekolah Trisabilillah" class="footer-logo">
+                <img src="https://placehold.co/150x50/FFFFFF/0D2C54?text=Sabilillah" alt="Logo Sekolah Sabilillah" class="footer-logo">
                 <p>Membentuk generasi penerus yang cerdas, kreatif, dan berakhlak mulia melalui pendidikan berkualitas dan inovatif.</p>
                  <div class="social-media" aria-label="Tautan sosial media">
-                    <a href="#" aria-label="Instagram Sekolah Trisabilillah"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                    <a href="#" aria-label="Facebook Sekolah Trisabilillah"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                    <a href="#" aria-label="YouTube Channel Sekolah Trisabilillah"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Instagram Sekolah Sabilillah"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Facebook Sekolah Sabilillah"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="YouTube Channel Sekolah Sabilillah"><i class="fab fa-youtube" aria-hidden="true"></i></a>
                 </div>
             </div>
             <div class="footer-links">
@@ -332,7 +556,7 @@
             </div>
         </div>
         <div class="footer-bottom container">
-            <p>© 2025 Sekolah Trisabilillah. Hak Cipta Dilindungi. Dibuat dengan <i class="fas fa-heart" aria-hidden="true"></i> untuk pendidikan.</p>
+            <p>&copy; 2025 Sekolah Sabilillah. Hak Cipta Dilindungi. Dibuat dengan <i class="fas fa-heart" aria-hidden="true"></i> untuk pendidikan.</p>
         </div>
     </footer>
 
@@ -340,10 +564,34 @@
         <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </a>
 
-    <!-- Scripts: letakkan akhir body, defer handled by browser if external -->
-    <script src=" https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js " defer></script>
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js "></script>
-    <script src="js/trisabilillah.js" defer></script>
+    <!-- AI Chat Widget -->
+    <div class="chat-widget-button" id="chat-toggle-button" aria-label="Buka live chat">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <div class="chat-widget-container" id="chat-widget">
+        <div class="chat-header">
+            <div class="chat-header-title">
+                <span class="online-indicator"></span>
+                <span>Asisten Virtual Sabilillah</span>
+            </div>
+            <button class="chat-close-btn" id="chat-close-button" aria-label="Tutup live chat">&times;</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Pesan akan ditambahkan di sini oleh JavaScript -->
+        </div>
+        <form class="chat-input-form" id="chat-form">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Ketik pertanyaan Anda..." autocomplete="off">
+            <button type="submit" class="chat-send-btn" aria-label="Kirim pesan">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
